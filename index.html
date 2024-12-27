@@ -1,47 +1,155 @@
-<body data-sveltekit-preload-data="hover">
-	<div style="display: contents" data-protonpass-form="">
-		<h1 class="svelte-gsi8vg">glTF Optimizer</h1> <a href="https://github.com/juunini/gltf-optimizer" target="_new"
-			id="githubLink" class="svelte-8avlu">Link to <img
-				src="https://juunini.github.io/gltf-optimizer/_app/immutable/assets/github-mark-26d56f27.png"
-				alt="GitHub" class="svelte-8avlu"></a>
-		<div id="dropzone" class="svelte-tnc7wr">Drag and drop your <code class="svelte-tnc7wr">.glb</code> file here
+<!DOCTYPE html>
+<html lang="en">
 
-			<input type="file" accept=".glb" id="dropzoneInput" class="svelte-tnc7wr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>GLTF Bulk Optimizer</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+		}
+
+		.container {
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+
+		.form-group {
+			margin-bottom: 15px;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 5px;
+		}
+
+		input[type="text"],
+		select {
+			width: 100%;
+			padding: 8px;
+			box-sizing: border-box;
+		}
+
+		button {
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+
+		.tooltip {
+			display: none;
+			position: absolute;
+			background-color: #333;
+			color: #fff;
+			padding: 5px;
+			border-radius: 5px;
+			font-size: 12px;
+		}
+
+		.form-group:hover .tooltip {
+			display: block;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h1>GLTF Bulk Optimizer</h1>
+		<p>This tool reduces the size of GLB files by converting their textures to WebP format and simplifying meshes.
+		</p>
+
+		<div class="form-group">
+			<label for="inputDir">Input Directory:</label>
+			<input type="text" id="inputDir" name="inputDir">
+			<button onclick="browseInputDirectory()">Browse</button>
+			<span class="tooltip">Path to the directory containing GLB files to be processed.</span>
 		</div>
-		<div style="display: flex; justify-content: center; align-items: center; margin: 20px;" class="svelte-sdhtho">
-			<button class="download-button svelte-1yp52zu" type="button" disabled="">Download</button></div>
-		<div class="box svelte-hjvgo6"><label>Emissive Strength
-				<input type="number" min="0" step="0.1" class="svelte-hjvgo6"></label></div>
-		<div class="box svelte-hjvgo6"><label>Simplify
-				<input type="checkbox"></label> <label>Simplify Ratio
-				<input type="number" max="1" min="0" step="0.01" class="svelte-hjvgo6" disabled=""></label>
-			<label>Simplify Error
-				<input type="number" max="1" min="0" step="0.01" class="svelte-hjvgo6" disabled=""></label></div>
-		<div class="box svelte-hjvgo6"><label>Weld Tolerance
-				<input type="number" max="1" min="0" step="0.0001" class="svelte-hjvgo6"></label></div>
-		<div class="box svelte-hjvgo6"><label>Texture Resolution
-				<input type="number" class="svelte-hjvgo6"></label> <label>LANCZOS2
-				<input type="radio" name="texture-resize-filter" value="LANCZOS2"></label> <label>LANCZOS3
-				<input type="radio" name="texture-resize-filter" value="LANCZOS3"></label></div>
-		<div class="box svelte-hjvgo6"><button type="button" class="svelte-hjvgo6" disabled="">Re Compress</button>
+
+		<div class="form-group">
+			<label for="outputDir">Output Directory:</label>
+			<input type="text" id="outputDir" name="outputDir">
+			<button onclick="browseOutputDirectory()">Browse</button>
+			<span class="tooltip">Path to the directory where optimized GLB files will be saved.</span>
 		</div>
-		<section class="display-section svelte-1ev6xbg">
-			<article class="display-article svelte-1x1q1f0" id="article1">
-				<p class="svelte-1x1q1f0"></p>
-				<p class="svelte-1x1q1f0"></p><canvas data-engine="three.js r148" width="800" height="800"
-					style="display: block; width: 400px; height: 400px; touch-action: none;"></canvas>
-			</article>
-			<article class="display-article svelte-1x1q1f0" id="article2">
-				<p class="svelte-1x1q1f0"></p>
-				<p class="svelte-1x1q1f0"></p><canvas data-engine="three.js r148" width="800" height="800"
-					style="display: block; width: 400px; height: 400px; touch-action: none;"></canvas>
-			</article>
-		</section>
-		<div id="svelte-announcer" aria-live="assertive" aria-atomic="true"
-			style="position: absolute; left: 0px; top: 0px; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px;">
+
+		<div class="form-group">
+			<label for="emissiveStrength">Emissive Strength:</label>
+			<input type="text" id="emissiveStrength" name="emissiveStrength" value="1.0">
+			<span class="tooltip">Emissive strength of the GLB file.</span>
 		</div>
+
+		<div class="form-group">
+			<label for="dracoMethod">Draco Method:</label>
+			<select id="dracoMethod" name="dracoMethod">
+				<option value="edgebreaker">Edgebreaker</option>
+				<option value="sequential">Sequential</option>
+			</select>
+			<span class="tooltip">Method for Draco compression. Edgebreaker: Better compression, preserves vertex
+				connectivity. Sequential: Preserves vertex positions, less compression.</span>
+		</div>
+
+		<div class="form-group">
+			<label for="weldTolerance">Weld Tolerance:</label>
+			<input type="text" id="weldTolerance" name="weldTolerance" value="0.0001">
+			<span class="tooltip">Tolerance, as a fraction of primitive AABB, used when merging similar vertices.</span>
+		</div>
+
+		<div class="form-group">
+			<label for="simplify">Enable Vertex Simplification:</label>
+			<input type="checkbox" id="simplify" name="simplify" checked>
+			<span class="tooltip">Enable or disable vertex simplification.</span>
+		</div>
+
+		<div class="form-group">
+			<label for="simplifyRatio">Simplify Ratio:</label>
+			<input type="text" id="simplifyRatio" name="simplifyRatio" value="0.75">
+			<span class="tooltip">Target ratio (0-1) of vertices to keep.</span>
+		</div>
+
+		<div class="form-group">
+			<label for="simplifyError">Simplify Error:</label>
+			<input type="text" id="simplifyError" name="simplifyError" value="0.01">
+			<span class="tooltip">Limit on error, as a fraction of mesh radius.</span>
+		</div>
+
+		<div class="form-group">
+			<label for="textureResolution">Texture Resize Resolution:</label>
+			<input type="text" id="textureResolution" name="textureResolution" value="1024">
+			<span class="tooltip">Maximum width/height to enforce, preserving aspect ratio.</span>
+		</div>
+
+		<div class="form-group">
+			<label for="textureFilter">Texture Resize Filter:</label>
+			<select id="textureFilter" name="textureFilter">
+				<option value="LANCZOS2">LANCZOS2</option>
+				<option value="LANCZOS3">LANCZOS3</option>
+			</select>
+			<span class="tooltip">Resampling filter method. LANCZOS3 is sharper, LANCZOS2 is smoother.</span>
+		</div>
+
+		<button onclick="startOptimization()">Start Bulk Processing</button>
+		<button onclick="showAbout()">About</button>
 	</div>
 
+	<script>
+		function browseInputDirectory() {
+			// Implement directory browsing logic
+		}
 
-	<protonpass-root-3bd0 data-protonpass-role="root" data-protonpass-theme="dark"></protonpass-root-3bd0>
+		function browseOutputDirectory() {
+			// Implement directory browsing logic
+		}
+
+		function startOptimization() {
+			// Implement optimization logic
+		}
+
+		function showAbout() {
+			// Implement about dialog logic
+		}
+	</script>
 </body>
+
+</html>
