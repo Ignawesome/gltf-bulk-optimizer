@@ -1,7 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<div id="dropzone" class="svelte-tnc7wr">Drag and drop your <code class="svelte-tnc7wr">.glb</code> file here
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>GLTF Bulk Optimizer</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+		}
 
-	<input type="file" accept=".glb" id="dropzoneInput" class="svelte-tnc7wr">
-</div>
+		.container {
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+
+		.form-group {
+			margin-bottom: 15px;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 5px;
+		}
+
+		input[type="text"],
+		select {
+			width: 100%;
+			padding: 8px;
+			box-sizing: border-box;
+		}
+
+		button {
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+
+		.tooltip {
+			display: none;
+			position: absolute;
+			background-color: #333;
+			color: #fff;
+			padding: 5px;
+			border-radius: 5px;
+			font-size: 12px;
+		}
+
+		.form-group:hover .tooltip {
+			display: block;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h1>GLTF Bulk Optimizer</h1>
+		<p>This tool reduces the size of GLB files by converting their textures to WebP format and simplifying meshes.
+		</p>
+
+		<div class="form-group">
+			<label for="inputDir">Input Directory:</label>
+			<input type="text" id="inputDir" name="inputDir">
+			<button onclick="browseInputDirectory()">Browse</button>
+			<span class="tooltip">Path to the directory containing GLB files to be processed.</span>
+		</div>
+
+		<div class="form-group">
+			<label for="outputDir">Output Directory:</label>
+			<input type="text" id="outputDir" name="outputDir">
+			<button onclick="browseOutputDirectory()">Browse</button>
+			<span class="tooltip">Path to the directory where optimized GLB files will be saved.</span>
+		</div>
+
+		<div class="form-group">
+			<label for="emissiveStrength">Emissive Strength:</label>
+			<input type="text" id="emissiveStrength" name="emissiveStrength" value="1.0">
+			<span class="tooltip">Emissive strength of the GLB file.</span>
+		</div>
+
+		<div class="form-group">
+			<label for="dracoMethod">Draco Method:</label>
+			<select id="dracoMethod" name="dracoMethod">
+				<option value="edgebreaker">Edgebreaker</option>
+				<option value="sequential">Sequential</option>
+			</select>
+			<span class="tooltip">Method for Draco compression. Edgebreaker: Better compression, preserves vertex
+				connectivity. Sequential: Preserves vertex positions, less compression.</span>
+		</div>
+
+		<div class="form-group">
+			<label for="weldTolerance">Weld Tolerance:</label>
+			<input type="text" id="weldTolerance" name="weldTolerance" value="0.0001">
+			<span class="tooltip">Tolerance, as a fraction of primitive AABB, used when merging similar vertices.</span>
+		</div>
+
+		<div class="form-group">
+			<label for="simplify">Enable Vertex Simplification:</label>
+			<input type="checkbox" id="simplify" name="simplify" checked>
+			<span class="tooltip">Enable or disable vertex simplification.</span>
+		</div>
+
+		<div class="form-group">
+			<label for="simplifyRatio">Simplify Ratio:</label>
+			<input type="text" id="simplifyRatio" name="simplifyRatio" value="0.75">
+			<span class="tooltip">Target ratio (0-1) of vertices to keep.</span>
+		</div>
+
+		<div class="form-group">
+			<label for="simplifyError">Simplify Error:</label>
+			<input type="text" id="simplifyError" name="simplifyError" value="0.01">
+			<span class="tooltip">Limit on error, as a fraction of mesh radius.</span>
+		</div>
+
+		<div class="form-group">
+			<label for="textureResolution">Texture Resize Resolution:</label>
+			<input type="text" id="textureResolution" name="textureResolution" value="1024">
+			<span class="tooltip">Maximum width/height to enforce, preserving aspect ratio.</span>
+		</div>
+
+		<div class="form-group">
+			<label for="textureFilter">Texture Resize Filter:</label>
+			<select id="textureFilter" name="textureFilter">
+				<option value="LANCZOS2">LANCZOS2</option>
+				<option value="LANCZOS3">LANCZOS3</option>
+			</select>
+			<span class="tooltip">Resampling filter method. LANCZOS3 is sharper, LANCZOS2 is smoother.</span>
+		</div>
+
+		<button onclick="startOptimization()">Start Bulk Processing</button>
+		<button onclick="showAbout()">About</button>
+	</div>
+
+	<script>
+		function browseInputDirectory() {
+			// Implement directory browsing logic
+		}
+
+		function browseOutputDirectory() {
+			// Implement directory browsing logic
+		}
+
+		function startOptimization() {
+			// Implement optimization logic
+		}
+
+		function showAbout() {
+			// Implement about dialog logic
+		}
+	</script>
+</body>
+
+</html>
