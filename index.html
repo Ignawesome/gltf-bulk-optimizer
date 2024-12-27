@@ -1,0 +1,41 @@
+<div style="display: contents" data-protonpass-form="">
+	<h1 class="svelte-gsi8vg">glTF Optimizer</h1> <a href="https://github.com/juunini/gltf-optimizer" target="_new"
+		id="githubLink" class="svelte-8avlu">Link to <img
+			src="https://juunini.github.io/gltf-optimizer/_app/immutable/assets/github-mark-26d56f27.png" alt="GitHub"
+			class="svelte-8avlu"></a>
+	<div id="dropzone" class="svelte-tnc7wr">Drag and drop your <code class="svelte-tnc7wr">.glb</code> file here
+
+		<input type="file" accept=".glb" id="dropzoneInput" class="svelte-tnc7wr">
+	</div>
+	<div style="display: flex; justify-content: center; align-items: center; margin: 20px;" class="svelte-sdhtho">
+		<button class="download-button svelte-1yp52zu" type="button" disabled="">Download</button></div>
+	<div class="box svelte-hjvgo6"><label>Emissive Strength
+			<input type="number" min="0" step="0.1" class="svelte-hjvgo6"></label></div>
+	<div class="box svelte-hjvgo6"><label>Simplify
+			<input type="checkbox"></label> <label>Simplify Ratio
+			<input type="number" max="1" min="0" step="0.01" class="svelte-hjvgo6" disabled=""></label> <label>Simplify
+			Error
+			<input type="number" max="1" min="0" step="0.01" class="svelte-hjvgo6" disabled=""></label></div>
+	<div class="box svelte-hjvgo6"><label>Weld Tolerance
+			<input type="number" max="1" min="0" step="0.0001" class="svelte-hjvgo6"></label></div>
+	<div class="box svelte-hjvgo6"><label>Texture Resolution
+			<input type="number" class="svelte-hjvgo6"></label> <label>LANCZOS2
+			<input type="radio" name="texture-resize-filter" value="LANCZOS2"></label> <label>LANCZOS3
+			<input type="radio" name="texture-resize-filter" value="LANCZOS3"></label></div>
+	<div class="box svelte-hjvgo6"><button type="button" class="svelte-hjvgo6" disabled="">Re Compress</button></div>
+	<section class="display-section svelte-1ev6xbg">
+		<article class="display-article svelte-1x1q1f0" id="article1">
+			<p class="svelte-1x1q1f0"></p>
+			<p class="svelte-1x1q1f0"></p><canvas data-engine="three.js r148" width="400" height="400"
+				style="display: block; width: 400px; height: 400px; touch-action: none;"></canvas>
+		</article>
+		<article class="display-article svelte-1x1q1f0" id="article2">
+			<p class="svelte-1x1q1f0"></p>
+			<p class="svelte-1x1q1f0"></p><canvas data-engine="three.js r148" width="400" height="400"
+				style="display: block; width: 400px; height: 400px; touch-action: none;"></canvas>
+		</article>
+	</section>
+	<div id="svelte-announcer" aria-live="assertive" aria-atomic="true"
+		style="position: absolute; left: 0px; top: 0px; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px;">
+	</div>
+</div>
