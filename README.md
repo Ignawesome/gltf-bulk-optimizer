@@ -1,122 +1,58 @@
-"GLTF Bulk Optimizer"
+# GLTF Bulk Optimizer
 
-"This tool adds the ability to use Juunini's gltf-optimizer in bulk.
-Gltf-optimizer changes the texture of the model and applies Draco compression to save storage and improve performance.
-This version adds the option to choose a folder, find all .glb files there and compress them into another output folder."
+GLTF Bulk Optimizer is a tool that enhances [Juunini's gltf-optimizer](https://github.com/juunini/gltf-optimizer) to process multiple GLTF files in bulk. It optimizes the textures of 3D models and applies Draco compression to save storage space and improve performance. This version allows users to select a folder, find all `.glb` files within it, and compress them into another output folder.
 
-"Developed by Ignacio Parentella for Harvard's CS50 Final Project"
+## Video showcase
 
-"GitHub: <https://github.com/Ignawesome/gltf-bulk-optimizer/>"
 
-"Thanks to Juunini for creating the original CLI version. <https://github.com/juunini/gltf-optimizer>."
+## Features
 
-"Thanks to Don McCurdy for the glTF-Transform API. <https://github.com/donmccurdy/glTF-Transform/tree/main>"
+- **Bulk Optimization**: Process multiple GLTF files at once.
+- **Texture Optimization**: Optimize textures to reduce file size.
+- **Draco Compression**: Apply Draco compression to 3D models.
+- **Customizable Output**: Choose an output folder for the optimized files.
 
-"And thanks to Harvard's CS50, David Malan, Doug Lloyd and Brian Yu for teaching me how to code."
+## Installation
 
-<h1 align="center">GLTF Optimizer</h1>
+To install the dependencies, run:
 
-<div align="center">
-  <img
-    src="https://repository-images.githubusercontent.com/581755148/e31793f8-a960-45f0-887e-fffe5f68677f"
-    alt=""
-    width="300"
-  />
-</div>
-
-<br />
-
-<div align="center">
-  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/GLTF-07C160?style=for-the-badge&logo=gltf&logoColor=white" alt="GLTF" />
-</div>
-
-<br />
-
-<div align="center">
-  <a href="https://codecov.io/gh/juunini/gltf-optimizer"> 
-    <img src="https://codecov.io/gh/juunini/gltf-optimizer/branch/main/graph/badge.svg?token=46CB8BN45T" /> 
-  </a>
-  <a href="https://snyk.io/test/github/juunini/gltf-optimizer">
-    <img src="https://snyk.io/test/github/juunini/gltf-optimizer/badge.svg" />
-  </a>
-</div>
-
----
-
-## [Demo](https://juunini.github.io/gltf-optimizer)
-
-## Caution
-
-Only can compress `.glb` file now.  
-Will be support `.gltf` soon.  
-
-## Introduce
-
-Optimize glTF.  
-Draco compress and convert texture to WebP.  
-
-Using [glTF-Transform](https://github.com/donmccurdy/glTF-Transform) and [webp-converter-browser](https://github.com/juunini/webp-converter-browser)
-
-## Install
-
-```bash
-# If you want to use CLI
-npm install --global gltf-optimizer
-
-# npm
-npm install gltf-optimizer
-
-# yarn
-yarn add gltf-optimizer
-
-# pnpm
-pnpm add gltf-optimizer
-
-# bun
-bun add gltf-optimizer
-
-# If you install and use browser side
-cp node_modules/gltf-optimizer/draco3d/* ./<your_static_path>/
+```
+npm install
 ```
 
 ## Usage
+To start the application, run:
 
-```ts
-import { optimizer } from 'gltf-optimizer'
-
-// ...
-
-// node (backend side)
-const glb = fs.readFileSync('./target.glb')
-const optimized = await optimizer.node(glb, { /* options */ })
-fs.writeFileSync('./compressed.glb', optimized)
-
-// browser (frontend side)
-const optimized = await optimizer.web(glb, { /* options */ })
-// if using get-file-using-a-tag (https://github.com/juunini/get-file-using-a-tag)
-download({ fileName: 'compressed.glb', arrayBuffer: optimized })
+```
+npm start
 ```
 
-## Usage(CLI)
+## Command Line Interface
+You can also use the command line interface to optimize GLTF files:
 
-```bash
-gltf-optimizer -i model.glb
-gltf-optimizer -i model.glb -o ./output
+```
+gltf-optimizer --input <input-folder> --output <output-folder>
 ```
 
-## Command-Line Flags
+## Development
+Building the Project
+To build the project, run:
 
-| Flag | Description | Required |
-|-|-|-|
-| `--help`, `-h` | Display help | No |
-| `--input`, `-i` | Path to the glTF or glb file. | :white_check_mark: Yes |
-| `--output`, `-o` | Output path of the glTF or glb file. Separate resources will be saved to the same directory. | No, default `./` |
-| `--emissiveStrength` | Emissive strength of the glTF file. | No, default `1.0` |
-| `--draco.method` | `edgebreaker` or `sequential` | No, default `edgebreaker` |
-| `--weld.tolerance` | Tolerance, as a fraction of primitive AABB, used when merging similar vertices. | No, default `0.0001` |
-| `--simplify.enabled` | Enable/disable vertex simplification. | No, default `true` |
-| `--simplify.ratio` | Target ratio (0-1) of vertices to keep. | No, default `0.75` |
-| `--simplify.error` | Limit on error, as a fraction of mesh radius. | No, default `0.01` |
-| `--texture.resize.resolution` | Maximum width/height to enforce, preserving aspect ratio. For example, a 4096x8192 texture, resized with limit [2048, 2048] will be reduced to 1024x2048. | No, default `1024` |
-| `--texture.resize.filter` | Resampling filter method. LANCZOS3 is sharper, LANCZOS2 is smoother. | No, default `LANCZOS3` |
+```
+npm run build
+```
+
+
+Packaging the Application
+To package the application for distribution, run:
+
+
+## Acknowledgements
+Juunini: For creating the original CLI version of gltf-optimizer. GitHub
+Don McCurdy: For the glTF-Transform API. GitHub
+Harvard's CS50: For teaching the fundamentals of coding. Special thanks to David Malan, Doug Lloyd, and Brian Yu.
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+Contact
+Developed by Ignacio Parentella for Harvard's CS50 Final Project.
