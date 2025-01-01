@@ -5,7 +5,7 @@ import { convertTextureWebP } from './convertTextureWebP'
 import { nodeIO } from './nodeIO'
 import { transform } from '../lib/transform'
 
-interface Options {
+export interface Options {
   emissiveStrength?: number
   transform?: TransformOptions
 }

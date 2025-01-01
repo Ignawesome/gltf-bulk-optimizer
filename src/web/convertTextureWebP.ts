@@ -8,8 +8,11 @@ export async function convertTextureWebP (doc: Document, resolution: number = 10
       const [width, height] = texture.getSize() ?? [1024, 1024]
       const rate = resolution / bigger(width, height)
 
+      const image = texture.getImage() as Uint8Array;
+      const arrayBuffer = image.buffer.slice(image.byteOffset, image.byteOffset + image.byteLength) as ArrayBuffer;
+
       return arrayBufferToWebP(
-        texture.getImage() as Uint8Array,
+        arrayBuffer,
         { width: width * rate, height: height * rate }
       )
         .then((webp) => webp.arrayBuffer())

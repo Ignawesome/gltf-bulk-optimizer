@@ -1,3 +1,19 @@
+"GLTF Bulk Optimizer"
+
+"This tool adds the ability to use Juunini's gltf-optimizer in bulk.
+Gltf-optimizer changes the texture of the model and applies Draco compression to save storage and improve performance.
+This version adds the option to choose a folder, find all .glb files there and compress them into another output folder."
+
+"Developed by Ignacio Parentella for Harvard's CS50 Final Project"
+
+"GitHub: <https://github.com/Ignawesome/gltf-bulk-optimizer/>"
+
+"Thanks to Juunini for creating the original CLI version. <https://github.com/juunini/gltf-optimizer>."
+
+"Thanks to Don McCurdy for the glTF-Transform API. <https://github.com/donmccurdy/glTF-Transform/tree/main>"
+
+"And thanks to Harvard's CS50, David Malan, Doug Lloyd and Brian Yu for teaching me how to code."
+
 <h1 align="center">GLTF Optimizer</h1>
 
 <div align="center">
